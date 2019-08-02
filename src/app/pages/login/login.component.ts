@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuarioModel } from 'src/app/models/usuario.models';
+
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -8,13 +10,19 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
+  usuario: UsuarioModel;
+
   constructor() { }
 
   ngOnInit() {
+    this.usuario = new UsuarioModel();
   }
 
   login( form: NgForm){
+    if (form.invalid) {return;}
     console.log('Imprimir si el formulario es válido');
   }
+   
+  
 
 }
