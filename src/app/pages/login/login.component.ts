@@ -10,12 +10,12 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  usuario: UsuarioModel;
+  usuario: UsuarioModel = new UsuarioModel();
 
   constructor() { }
 
   ngOnInit() {
-    this.usuario = new UsuarioModel();
+
   }
 
   login( form: NgForm){
