@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioModel } from '../models/usuario.models';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,9 @@ export class AuthService {
 // Login
 // https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient ) {
+    this.leerToken();
+   }
 
 
   logout(){}
@@ -29,6 +32,12 @@ export class AuthService {
     return this.http.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBZgKezW-d4XNxW37-TBFU7vNFS4N5rQtA`,
       authData
+    ).pipe(
+        map( resp => {
+        
+          this.guardarToken(resp['idToken']);
+          return resp;
+        })
     );
   } 
 
@@ -52,13 +61,19 @@ export class AuthService {
     return this.http.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBZgKezW-d4XNxW37-TBFU7vNFS4N5rQtA`,
       authData
+    ).pipe(
+        map( resp => {
+        
+          this.guardarToken(resp['idToken']);
+          return resp;
+        })
     );
 
   
   }
 
   private guardarToken (idToken: string){
-      this.userToke = idToken;
+      this.userToken = idToken;
       localStorage.setItem('token', idToken);
   }
 
