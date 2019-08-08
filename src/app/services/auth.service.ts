@@ -9,6 +9,7 @@ export class AuthService {
 
   private url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
   private apikey = 'AIzaSyBZgKezW-d4XNxW37-TBFU7vNFS4N5rQtA';
+  userToken: string;
   // Crer nuevos usuarios
 //https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
 
@@ -52,5 +53,22 @@ export class AuthService {
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBZgKezW-d4XNxW37-TBFU7vNFS4N5rQtA`,
       authData
     );
+
+  
+  }
+
+  private guardarToken (idToken: string){
+      this.userToke = idToken;
+      localStorage.setItem('token', idToken);
+  }
+
+  leerToken(){
+    if(localStorage.getItem('token')){
+      this.userToken = localStorage.getItem('token');
+    }else{
+      this.userToken='';
+    }
+
+    return this.userToken;
   }
 }
